@@ -44,6 +44,13 @@
 -- COMMAND ----------
 
 -- TODO
+CREATE TABLE IF NOT EXISTS fireIncidents 
+USING csv
+OPTIONS(
+header "True",
+path "/mnt/davis/fire-incidents/fire-incidents-2016.csv",
+inferSchema "True"
+)
 
 -- COMMAND ----------
 
@@ -57,6 +64,9 @@
 -- COMMAND ----------
 
 -- TODO
+SELECT *
+FROM fireIncidents
+LIMIT 10 
 
 -- COMMAND ----------
 
@@ -79,6 +89,9 @@
 -- COMMAND ----------
 
 -- TODO
+SELECT *
+FROM fireIncidents
+WHERE `Incident Date` = "04/04/2016"
 
 -- COMMAND ----------
 
@@ -92,6 +105,9 @@
 -- COMMAND ----------
 
 -- TODO
+SELECT *
+FROM fireIncidents
+WHERE `Incident Date` = "04/04/2016" OR `Incident Date` = "09/27/2016"
 
 -- COMMAND ----------
 
@@ -111,6 +127,11 @@
 -- COMMAND ----------
 
 -- TODO
+SELECT *
+FROM fireIncidents
+WHERE (`Incident Date` = "04/04/2016" OR `Incident Date` = "09/27/2016")
+AND
+  `Station Area` >= 20
 
 -- COMMAND ----------
 
@@ -124,6 +145,11 @@
 -- COMMAND ----------
 
 -- TODO
+SELECT 
+  count(*)
+FROM fireIncidents
+WHERE 
+  `Incident Date` = "04/04/2016"
 
 -- COMMAND ----------
 
@@ -139,6 +165,12 @@
 -- COMMAND ----------
 
 -- TODO
+SELECT 
+  `Ignition Cause`,
+  count(1)
+FROM fireIncidents
+GROUP BY 
+  `Ignition Cause`
 
 -- COMMAND ----------
 
@@ -156,6 +188,14 @@
 -- COMMAND ----------
 
 -- TODO
+SELECT 
+  `Ignition Cause`,
+  count(1) as count
+FROM fireIncidents
+GROUP BY 
+  `Ignition Cause`
+ORDER BY 
+  `count` asc
 
 -- COMMAND ----------
 
@@ -165,6 +205,14 @@
 -- COMMAND ----------
 
 -- TODO
+SELECT 
+  `Ignition Cause`,
+  count(1) as count
+FROM fireIncidents
+GROUP BY 
+  `Ignition Cause`
+ORDER BY 
+  `count` desc
 
 -- COMMAND ----------
 
@@ -176,6 +224,14 @@
 -- COMMAND ----------
 
 -- TODO
+CREATE TABLE IF NOT EXISTS fireCalls
+USING csv
+OPTIONS 
+(
+  header "True",
+  path "/mnt/davis/fire-calls/fire-calls-truncated-comma.csv",
+  inferSchema "True"
+)
 
 -- COMMAND ----------
 
@@ -185,6 +241,11 @@
 -- COMMAND ----------
 
 -- TODO
+SELECT *
+FROM fireIncidents i
+INNER JOIN fireCalls c
+ON 
+  i.`Battalion` = c.`Battalion`
 
 -- COMMAND ----------
 
@@ -198,6 +259,14 @@
 -- COMMAND ----------
 
 -- TODO
+SELECT 
+  count(1)
+FROM 
+  (SELECT *
+FROM fireIncidents i
+INNER JOIN fireCalls c
+ON 
+  i.`Battalion` = c.`Battalion`)
 
 -- COMMAND ----------
 
