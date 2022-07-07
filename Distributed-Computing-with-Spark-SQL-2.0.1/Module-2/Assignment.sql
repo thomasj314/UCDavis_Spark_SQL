@@ -42,6 +42,9 @@ CLEAR CACHE
 -- COMMAND ----------
 
 -- TODO
+SELECT 
+  count(1)
+FROM fireCalls
 
 -- COMMAND ----------
 
@@ -56,6 +59,7 @@ CLEAR CACHE
 -- COMMAND ----------
 
 -- TODO
+Cache Table fireCalls
 
 -- COMMAND ----------
 
@@ -67,6 +71,14 @@ CLEAR CACHE
 -- COMMAND ----------
 
 -- TODO
+SELECT 
+  `Unit Type`,
+  count(1) as count
+FROM fireCalls
+GROUP BY 
+  `Unit Type`
+ORDER BY 
+  count desc
 
 -- COMMAND ----------
 
